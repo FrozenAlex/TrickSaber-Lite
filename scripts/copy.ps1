@@ -87,11 +87,12 @@ foreach ($fileName in $modJson.lateModFiles) {
     }
 }
 
+
 # Restart the game
-& $PSScriptRoot/restart-game.ps1 "-packageId:$packageId"
+& $PSScriptRoot/restart-game.ps1 -packageId:$packageId
 
 # Start logging if requested
 if ($log -eq $true) {
     & adb logcat -c
-    & $PSScriptRoot/start-logging.ps1 -self:$self -all:$all -custom:$custom -file:$file "-packageId:$packageId"
+    & $PSScriptRoot/start-logging.ps1 -self:$self -all:$all -custom:$custom -file:$file -packageId:$packageId
 }
