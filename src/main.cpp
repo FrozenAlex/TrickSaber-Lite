@@ -570,11 +570,16 @@ extern "C" __attribute__((visibility("default"))) void late_load() {
 
     getTrickSaberConfig().Init(modInfo);
 
-    getLogger().info("Deactivated Score Submission safely !!");
-    TrickUtils::Utils::DisableScoreSubmission();
+    if (getTrickSaberConfig().ModEnabled.GetValue()) {
+        getLogger().info("TrickSaber Lite is enabled, disabling score submission!");
+        TrickUtils::Utils::DisableScoreSubmission();
+    }
 
     bool registrationSuccess =
         BSML::Register::RegisterSettingsMenu("TrickSaber Lite Settings", TrickSaber::UI::SettingsViewControllerDidActivate, false);
+    BSML::Register::RegisterMainMenuViewControllerMethod(
+        "TrickSaber", "TrickSaber", "TrickSaber Lite Settings", TrickSaber::UI::SettingsViewControllerDidActivate
+    );
 
     auto logger = Paper::ConstLoggerContext("TrickSaberLite");
     getLogger().info("Installing Hooks..");
